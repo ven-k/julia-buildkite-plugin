@@ -255,11 +255,11 @@ if [[ "${BUILDKITE_PLUGIN_JULIA_UPDATE_REGISTRY:-true}" == "true" ]]; then
       if VERSION >= v"1.1-"
         if !isdir(joinpath(DEPOT_PATH[1], "registries", "General"))
           Pkg.Registry.add("General")
+        else
           # If extra registries are passed, add them
-          for registry in ENV["BUILDKITE_PLUGIN_JULIA_EXTRA_REGISTRIES"])
+          for registry in ENV["BUILDKITE_PLUGIN_JULIA_EXTRA_REGISTRIES"]
             Pkg.Registry.add(RegistrySpec(; url=registry))
           end
-        else
           Pkg.Registry.update()
         end
       else
