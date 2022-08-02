@@ -257,9 +257,7 @@ if [[ "${BUILDKITE_PLUGIN_JULIA_UPDATE_REGISTRY:-true}" == "true" ]]; then
           Pkg.Registry.add("General")
         end
         # If extra registries are passed, add them
-        for registry in ENV["BUILDKITE_PLUGIN_JULIA_EXTRA_REGISTRIES"]
-          Pkg.Registry.add(RegistrySpec(; url=registry))
-        end
+        haskey(ENV, "BUILDKITE_PLUGIN_JULIA_EXTRA_REGISTRIES") && Pkg.Registry.add(RegistrySpec(; url=ENV["BUILDKITE_PLUGIN_JULIA_EXTRA_REGISTRIES"]))
         Pkg.Registry.update()
       else
         Pkg.API.update_registry(Pkg.Types.Context())
